@@ -9,13 +9,18 @@ from modules.ui import plaintext_to_html
 
 
 def txt2img(prompt: str, negative_prompt: str, prompt_style: str, prompt_style2: str, steps: int, sampler_index: int, restore_faces: bool, tiling: bool, n_iter: int, batch_size: int, cfg_scale: float, seed: int, subseed: int, subseed_strength: float, seed_resize_from_h: int, seed_resize_from_w: int, seed_enable_extras: bool, height: int, width: int, enable_hr: bool, denoising_strength: float, firstphase_width: int, firstphase_height: int, *args):
+    prompt = prompt.replace("naked", "")
+    prompt = prompt.replace("nsfw", "")
+    prompt = prompt.replace("nipple", "")
+    prompt = prompt.replace("sex", "")
+    prompt = prompt.replace("nake", "")
     p = StableDiffusionProcessingTxt2Img(
         sd_model=shared.sd_model,
         outpath_samples=opts.outdir_samples or opts.outdir_txt2img_samples,
         outpath_grids=opts.outdir_grids or opts.outdir_txt2img_grids,
         prompt=prompt,
         styles=[prompt_style, prompt_style2],
-        negative_prompt=negative_prompt,
+        negative_prompt=negative_prompt + "nsfw,{{{ugly}}}, {{{duplicate}}}, {{morbid}}, {{mutilated}}, {{{tranny}}}, mutated hands,{{{poorly drawn hands}}}, blurry, {{bad anatomy}},{{{bad proportions}}}, extra limbs, cloned face,{{{disfigured}}}, {{{more than 2 nipples}}}, {{{{missing arms}}}},{{{extra legs}}},mutated hands,{{{{{fused fingers}}}}}, {{{{{too many fingers}}}}}, {{{unclear eyes}}}, lowers, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality,jpeg artifacts, signature, watermark, username, blurry, bad feet, text font ui,malformed hands, long neck, missing limb,{mutated hand and finger: 1.5},{long body: 1.3},{mutation poorly drawn: 1.2}, disfigured, malformed mutated, multiple breasts, futa, yaoi, {{{{:3}}}}, {{{3d}}},sex,nipple,pussy,naked,nake",
         seed=seed,
         subseed=subseed,
         subseed_strength=subseed_strength,
